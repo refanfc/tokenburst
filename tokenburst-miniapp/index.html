@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TokenBurst Mini App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body style="font-family: sans-serif; padding: 20px;">
+    <h2>💥 TokenBurst Creator</h2>
+    <form id="burst-form">
+      <label>Farcaster Cast URL:</label><br>
+      <input type="text" id="castUrl" required style="width:100%"><br><br>
+      <label>Token (address):</label><br>
+      <input type="text" id="token" required style="width:100%"><br><br>
+      <label>Total Amount:</label><br>
+      <input type="number" id="amount" required><br><br>
+      <label>Per User Amount:</label><br>
+      <input type="number" id="perUser" required><br><br>
+      <button type="submit">Create Burst</button>
+    </form>
+
+    <p id="status"></p>
+
+    <script>
+      const form = document.getElementById("burst-form");
+      const status = document.getElementById("status");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        status.textContent = "Creating burst...";
+
+        const res = await fetch("/api/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            castUrl: castUrl.value,
+            token: token.value,
+            amount: parseFloat(amount.value),
+            perUser: parseFloat(perUser.value)
+          }),
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          status.textContent = "✅ Burst created!";
+        } else {
+          status.textContent = "❌ Error: " + data.error;
+        }
+      });
+    </script>
+  </body>
+</html>

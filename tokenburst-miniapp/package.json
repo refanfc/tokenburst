@@ -1,0 +1,9 @@
+{
+  "name": "tokenburst-miniapp",
+  "version": "1.0.0",
+  "description": "Farcaster Mini App to create TokenBursts",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "MIT"
+}
